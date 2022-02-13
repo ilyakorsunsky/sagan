@@ -1,2 +1,3 @@
-# spatialmethods
-R package with collection of use methods for spatial transcriptomics 
+# sagan
+
+R package with collection of use methods for spatial transcriptomics analysis. 
