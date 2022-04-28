@@ -121,14 +121,16 @@ Read10X_generic <- function(data.dirs, assay, to.upper=FALSE, libnames=NULL, str
         add.prefix <- TRUE
     }
     
-    
-    
-    
     data_list <- purrr::map2(data.dirs, libnames, function(data.dir, libname) {
         ## Search for putative filenames
-        filename_h5 <- normalizePath(list.files(data.dir, pattern='filtered.*h5$', recursive=TRUE, full=TRUE))
-        filename_filtered_mtx <- normalizePath(list.files(data.dir, pattern='filtered.*mtx', recursive=TRUE, full=TRUE))
-        filename_mtx <- normalizePath(list.files(data.dir, pattern='mtx', recursive=TRUE, full=TRUE))
+#         filename_h5 <- normalizePath(list.files(data.dir, pattern='filtered.*h5$', recursive=TRUE, full=TRUE))
+#         filename_filtered_mtx <- normalizePath(list.files(data.dir, pattern='filtered.*mtx', recursive=TRUE, full=TRUE))
+#         filename_mtx <- normalizePath(list.files(data.dir, pattern='mtx', recursive=TRUE, full=TRUE))
+        filename_h5 <- normalizePath(list.files(data.dir, pattern = "h5$", recursive = TRUE, full = TRUE))
+        filename_h5 <- grep('filtered', filename_h5, value = TRUE)
+        filename_mtx <- normalizePath(list.files(data.dir, pattern = "mtx", recursive = TRUE, full = TRUE))
+        filename_filtered_mtx <- grep('filtered', filename_mtx, value = TRUE)
+        filename_mtx <- setdiff(filename_mtx, filename_filtered_mtx)
 
         if (length(filename_h5) > 0) {
             if (length(filename_h5) > 1) stop(glue('Multiple h5 files found in {data.dir}'))
